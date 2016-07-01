@@ -224,6 +224,15 @@ bool Frac::empty() {
 void Frac::display() {
     if   ( den==1 )
          { cout << num;
+           return;
+         }
+
+    double t = num * 1.0 / den * 1000;
+    int    ti = (int)   t;
+    double td = (double)ti;
+
+    if   ( td==t )
+         { cout << num * 1.0 / den;
          }
     else { cout << num << "/" << den;
          }
@@ -232,6 +241,15 @@ void Frac::display() {
 ostream& operator<<(ostream &os, const Frac &x) {
     if   ( x.den==1 )
          { os << x.num;
+           return os;
+         }
+
+    double t = x.num * 1.0 / x.den * 1000;
+    int    ti = (int)   t;
+    double td = (double)ti;
+
+    if   ( td==t )
+         { os << x.num * 1.0 / x.den;
          }
     else { os << x.num << "/" << x.den;
          }
