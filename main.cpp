@@ -197,7 +197,7 @@ void evalPostfix(string &infixOri)
 
 void evalAnswer(string* postfix, const int n)
 {
-    Stack<double> box;
+    Stack<Frac> box;
 
     for ( int i=0 ; i<n ; ++i )
         { string token( postfix[i] );
@@ -210,8 +210,8 @@ void evalAnswer(string* postfix, const int n)
                   { error(8);
                     return;
                   }
-               double y = box.top();  box.pop();
-               double x = box.top();  box.pop();
+               Frac y = box.top();  box.pop();
+               Frac x = box.top();  box.pop();
                if ( token=="+" )
                   { box.push(x+y);
                     continue;
@@ -225,7 +225,8 @@ void evalAnswer(string* postfix, const int n)
                     continue;
                   }
                if ( token=="/" )
-                  { if ( y==0.0 )
+                  { Frac zero(0,1);
+                    if ( y==zero )
                        { error(7);
                          return;
                        }
@@ -234,7 +235,8 @@ void evalAnswer(string* postfix, const int n)
                   }
              }
 
-          box.push( iden(token) );
+          Frac x;  x = iden(token);
+          box.push( x );
         }
     if  ( box.size()!=1 )
         { error(6);
@@ -242,8 +244,9 @@ void evalAnswer(string* postfix, const int n)
         }
 
 
-    cout << "answer: " << box.top()
-         << endl << endl;
+    Frac x;  x = box.top();
+    cout << "answer: ";  x.display();
+    cout << endl << endl;
     return;
 }
 

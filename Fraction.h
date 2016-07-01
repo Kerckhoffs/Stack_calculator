@@ -16,6 +16,7 @@ public:
     void set(int a, int b);
 
     Frac& operator=(const Frac &x);
+    Frac& operator=(double x);
 
     Frac operator*(Frac &x);
     Frac operator/(Frac &x);
@@ -69,6 +70,25 @@ void Frac::set(int a, int b) {
 Frac& Frac::operator=(const Frac &x) {
     num = x.num;
     den = x.den;
+    return *this;
+}
+
+Frac& Frac::operator=(double x) {
+    den = 1;
+
+    for ( ; true ; )
+        { int    xi = (int)   x;
+          double xd = (double)xi;
+
+          if ( xd==x )
+             { num = xi;
+               break;
+             }
+          x   *= 10;
+          den *= 10;
+        }
+
+    reduction();
     return *this;
 }
 
