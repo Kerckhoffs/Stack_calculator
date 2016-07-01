@@ -47,6 +47,11 @@ int main()
   //string infix("1+010");  // error
   //string infix("2/0");  // error
 
+
+    cout << "input: " << infix
+         << endl << endl;
+
+
     evalPostfix(infix);
     if ( err )
        { cout << errMsg[errNum] << endl;
@@ -124,6 +129,13 @@ void evalPostfix(string &infixOri)
           if ( infix[i]=="(" ||
                infix[i]==")" )         --cnt;
         }
+
+
+    cout << "infix: ";
+    for ( int i=0 ; i<numI ; ++i )
+        { cout << infix[i] << " ";
+        }
+    cout << endl << endl;
 
 
     const  int     numP = cnt;
