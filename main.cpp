@@ -244,8 +244,8 @@ void evalAnswer(string* postfix, const int n)
 
 
     Frac x( box.top() );
-    cout << "answer: ";  x.display();
-    cout << endl << endl;
+    cout << "answer: " << x
+         << endl << endl;
     return;
 }
 

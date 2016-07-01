@@ -44,6 +44,7 @@ public:
     bool empty();
 
     void display();
+    friend ostream& operator<<(ostream &os, const Frac &x);
 
 private:
     void reduction();
@@ -221,8 +222,20 @@ bool Frac::empty() {
 }
 
 void Frac::display() {
-          cout << num;
-    if ( den!=1 ) cout << "/" << den;
+    if   ( den==1 )
+         { cout << num;
+         }
+    else { cout << num << "/" << den;
+         }
+}
+
+ostream& operator<<(ostream &os, const Frac &x) {
+    if   ( x.den==1 )
+         { os << x.num;
+         }
+    else { os << x.num << "/" << x.den;
+         }
+    return os;
 }
 
 void Frac::reduction() {
