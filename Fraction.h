@@ -12,10 +12,21 @@ private:
 public:
     Frac();
     Frac(const Frac &x);
+
+    Frac(int a);
     Frac(int a, int b);
+    void set(int a);
     void set(int a, int b);
 
+    Frac(float x);
+    Frac(double x);
+    void set(float x);
+    void set(double x);
+
     Frac& operator=(const Frac &x);
+
+    Frac& operator=(int x);
+    Frac& operator=(float x);
     Frac& operator=(double x);
 
     Frac operator*(Frac &x);
@@ -30,6 +41,7 @@ public:
 
     bool operator==(Frac &x);
     bool operator!=(Frac &x);
+    bool empty();
 
     void display();
 
@@ -51,8 +63,16 @@ Frac::Frac(const Frac &x) {
     den = x.den;
 }
 
+Frac::Frac(int a) {
+    set(a);
+}
+
 Frac::Frac(int a, int b) {
     set(a, b);
+}
+
+void Frac::set(int a) {
+    set(a, 1);
 }
 
 void Frac::set(int a, int b) {
@@ -67,13 +87,33 @@ void Frac::set(int a, int b) {
     reduction();
 }
 
-Frac& Frac::operator=(const Frac &x) {
-    num = x.num;
-    den = x.den;
-    return *this;
+Frac::Frac(float x) {
+    set(x);
 }
 
-Frac& Frac::operator=(double x) {
+Frac::Frac(double x) {
+    set(x);
+}
+
+void Frac::set(float x) {
+    den = 1;
+
+    for ( ; true ; )
+        { int   xi = (int)  x;
+          float xf = (float)xi;
+
+          if ( xf==x )
+             { num = xi;
+               break;
+             }
+          x   *= 10;
+          den *= 10;
+        }
+
+    reduction();
+}
+
+void Frac::set(double x) {
     den = 1;
 
     for ( ; true ; )
@@ -89,6 +129,26 @@ Frac& Frac::operator=(double x) {
         }
 
     reduction();
+}
+
+Frac& Frac::operator=(const Frac &x) {
+    num = x.num;
+    den = x.den;
+    return *this;
+}
+
+Frac& Frac::operator=(int x) {
+    set(x);
+    return *this;
+}
+
+Frac& Frac::operator=(float x) {
+    set(x);
+    return *this;
+}
+
+Frac& Frac::operator=(double x) {
+    set(x);
     return *this;
 }
 
@@ -98,7 +158,7 @@ Frac Frac::operator*(Frac &x) {
 }
 
 Frac Frac::operator/(Frac &x) {
-    if ( x.num==0 )
+    if ( x.empty() )
        { cout << "error" << endl;
          return Frac();
        }
@@ -151,6 +211,13 @@ bool Frac::operator==(Frac &x) {
 
 bool Frac::operator!=(Frac &x) {
     return !( *this==x );
+}
+
+bool Frac::empty() {
+    if ( num==0 )
+        return true;
+
+    return false;
 }
 
 void Frac::display() {

@@ -225,8 +225,7 @@ void evalAnswer(string* postfix, const int n)
                     continue;
                   }
                if ( token=="/" )
-                  { Frac zero(0,1);
-                    if ( y==zero )
+                  { if ( y.empty() )
                        { error(7);
                          return;
                        }
@@ -235,8 +234,8 @@ void evalAnswer(string* postfix, const int n)
                   }
              }
 
-          Frac x;  x = iden(token);
-          box.push( x );
+          Frac x( iden(token) );
+          box.push(x);
         }
     if  ( box.size()!=1 )
         { error(6);
@@ -244,7 +243,7 @@ void evalAnswer(string* postfix, const int n)
         }
 
 
-    Frac x;  x = box.top();
+    Frac x( box.top() );
     cout << "answer: ";  x.display();
     cout << endl << endl;
     return;
