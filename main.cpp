@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 using namespace std;
 
 #include "Fraction.h"
@@ -40,12 +41,22 @@ void evalAnswer (string* postfix, const int n);
 
 double iden(string x);
 
+void check(string &x);
+
 int main()
 {
-    string infix("3*(1+2.1)+100");
-  //string infix("(3*(1+2.1)");  // error
-  //string infix("1+010");  // error
-  //string infix("2/0");  // error
+    string infix;
+
+    if   ( true )
+         { infix = "3*(1+2.1)+100";
+         //infix = "(3*(1+2.1)";    // error
+         //infix = "1+010";         // error
+         //infix = "2/0";           // error
+         }
+    else { cout << "請輸入算式: ";
+           cin >> infix;  check(infix);
+           cout << endl;
+         }
 
 
     cout << "input: " << infix
@@ -327,4 +338,24 @@ int idenNum(char x)
         return -1;
 
     return -2;
+}
+
+void check(string &x)
+{
+    static int max = 0;  ++max;
+
+    if ( !cin.fail() )
+       { return;
+       }
+    if ( max==100 )
+       { cout << "warning, recursion overflow!" << endl;
+         cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n');  x = "";
+         return;
+       }
+
+    cout << "cin error, try again: ";
+    cin.clear();  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin >> x;
+
+    return check(x);
 }
